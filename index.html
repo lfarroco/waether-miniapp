@@ -1,5 +1,5 @@
 <!doctype HTML>
-<html>
+<html ng-app="weatherApp" ng-controller="homeCtrl">
 
 <head>
     <title>Weather Miniapp</title>
@@ -7,26 +7,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="app.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
 
     <div id="app">
 
-        <img src="img/serious_cloud.png" />
+		<div ng-if="!location.found">
+		
+			<img src="img/open_sky.png">
+		
+			<p>We'got your location! Let's see how's the weather there...</p>
+			
+		</div>
+		
+		<div ng-if="location.found" class="text-center">
 
-        <h1>LONDON, UK</h1>
-
-
+			<img ng-src="http://openweathermap.org/img/w/{{location.icon}}.png" class="icon" /> 
+		
+			<p>You are in</p>
+			
+			<h2>{{location.name}}, {{location.country}}</h2>
+			
+			<p>If you look outside you will see</p>
+			
+			<h2>{{weather.desc}}</h2>
+			
+			<p>The current temperature is</p>
+			
+			<h2>{{weather.temp}}</h2>
+			
+			<h3>"{{weather.msg}}"</h3>
+		
+		
+		</div>
+		
+		<div ng-if="isRequestingZipCode">
+		
+			<img src="img/serious_cloud.png">
+		
+			<p>We were unable to identify your location. Please insert your a US zipcode in the input below</p>
+		
+			<form ng-submit="submitZipcode( location.zipcode )">
+				<input ng-model="location.zipcode" class="input" />
+			</form>
+			
+		</div>
+		
+		<div ng-if="invalidZipcode" class="error">You submitted an invalid zipcode. Please try again with a new number (eg. 1005).</div>
+		
     </div>
 
 </body>
-
 </html>

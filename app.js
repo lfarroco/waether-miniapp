@@ -2,9 +2,9 @@
 
 	"use strict";
 
-	var app = angular.module('weather', []);
+	var app = angular.module('weatherApp', []);
 
-	app.controller('home', function ($scope, $http, locationFactory) {
+	app.controller('homeCtrl', function ($scope, $http, locationFactory) {
 
 		//app status
 		$scope.isRequestingZipCode = false;
@@ -13,6 +13,7 @@
 		//user location info
 		$scope.location = {
 			name : '',
+			found : false,
 			zipcode : 0,
 			country : ''
 		};
@@ -20,8 +21,8 @@
 		//weather info
 		$scope.weather = {
 			desc : '',
-			temp : 0
-
+			temp : 0,
+			tempComment : ''
 		}
 
 		if ("geolocation" in navigator) {
@@ -78,6 +79,23 @@
 		$scope.assignApiData = function (data) {
 
 			//assigns received data to the $scope
+			
+			var celsius = parseInt((data.main.temp - 273.15) * 10)/10; //kelvin to celsius
+			var msg = '';
+			
+			//funny messages : )
+			if(celsius > 40)
+				msg = 'Let\'s fry some eggs in the floor!';
+			if(celsius < 40 & celsius > 30)
+				msg = 'Pretty hot, isn\'t it? We better go to the beach!';
+			if(celsius < 30 & celsius > 20)
+				msg = 'It\'s so cozy! How about some tea and a good book?';
+			if(celsius < 20 & celsius > 10)
+				msg = 'It\'s getting cold, grab me some hot chocolate!';
+			if(celsius < 20 & celsius > 10)
+				msg = 'Don\'t forget your coat!';
+			if(celsius < 10 )
+				msg = 'I think that I saw a penguin around here...';
 
 			$scope.location = {
 
@@ -88,18 +106,15 @@
 			};
 
 			$scope.weather = {
-
 				desc : data.weather[0].description,
-				temp : parseInt((data.main.temp - 273.15) * 10) / 10 + '°C'
-
+				temp : celsius + '°C',
+				msg: msg
 			};
-
+			
 		}
 
 	}); //end home controller
 	
-	
-
 	app.factory('locationFactory', function ($http) {
 
 		var apiUrl = 'http://api.openweathermap.org/data/2.5/weather';
@@ -156,5 +171,4 @@
 
 	}); //end location factory
 
-}
-	())
+}());
