@@ -44,7 +44,12 @@
 			<h2>{{weather.temp}}</h2>
 			
 			<h3>"{{weather.msg}}"</h3>
+			
+			<h2>Check out these places</h2>
 		
+			<p class="place" ng-click="getPosInfo({coords:{longitude:'0.1275',latitude:'51.5072'}})">Abbey Wood, London</p>
+			<p class="place" ng-click="getPosInfo({coords:{longitude:'2.21',latitude:'48.51'}})">Chamarande,Paris</p>
+			<p class="place" ng-click="getPosInfo({coords:{longitude:'-43.17',latitude:'-22.90'}})">Rio de Janeiro</p>
 		
 		</div>
 		

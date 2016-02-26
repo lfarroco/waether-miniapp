@@ -26,3 +26,9 @@ img{
 h2, h3, p{
 	text-shadow: 2px 2px 0 #000;
 }
+
+.place:hover{
+	cursor: pointer;
+	opacity: 0.9;
+}
+

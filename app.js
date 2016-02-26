@@ -24,34 +24,36 @@
 			temp : 0,
 			tempComment : ''
 		}
+		
+		$scope.getPosInfo = function(position){
+			
+			var lat = position.coords.latitude;
+			var lon = position.coords.longitude;
+
+			locationFactory.position(lat, lon).then(function (response) {
+
+				//if the user switched to zipcode query while wayting for a location reply, ignore this results
+				if ($scope.isRequestingZipCode)
+					return;
+
+				$scope.assignApiData(response);
+
+			});
+			
+		}
 
 		if ("geolocation" in navigator) {
 
 			navigator.geolocation.getCurrentPosition(
 
 				//success callback
-				function (position) {
-
-				var lat = position.coords.latitude;
-				var lon = position.coords.longitude;
-
-				locationFactory.position(lat, lon).then(function (response) {
-
-					//if the user switched to zipcode query while wayting for a location reply, ignore this results
-					if ($scope.isRequestingZipCode)
-						return;
-
-					$scope.assignApiData(response);
-
-				});
-
-			},
+				$scope.getPosInfo,
 				//error callback
 				function (err) {
 
-				$scope.isRequestingZipCode = true;
+					$scope.isRequestingZipCode = true;
 
-			});
+				});
 		} else {
 
 			$scope.isRequestingZipCode = true;
