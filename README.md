@@ -1,2 +1,4 @@
-# weather-miniapp
-View weather information using openweathermap.org
+# weather-miniapp  
+Weather information using openweathermap.org  
+
+[View it online](http://htmlpreview.github.io/?https://github.com/lfarroco/weather-miniapp/blob/master/index.html)
