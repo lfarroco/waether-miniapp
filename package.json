@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/lfarroco/weather-miniapp/issues"
   },
-  "homepage": "https://github.com/lfarroco/weather-miniapp"
+  "homepage": "https://github.com/lfarroco/weather-miniapp",
+  "dependencies": {
+    "grunt-cli": "^0.1.13",
+    "jquery": "^2.2.1"
+  }
 }
