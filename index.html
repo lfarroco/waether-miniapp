@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app.min.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 
@@ -16,20 +15,20 @@
 </head>
 
 <body>
+    
+    <div id="app" class="hide {{location ? 'show' : ''}}">
 
-    <div id="app">
-
-		<div ng-if="!location.found">
+		<div ng-if="!location.found && !isRequestingZipCode">
 		
 			<img src="img/open_sky.png">
 		
-			<p>We'got your location! Let's see how's the weather there...</p>
-			
+			<p class="{{displayZipOption ? 'hide' : 'show'}}">Let's see how's the weather there...</p>
+            
 		</div>
 		
-		<div ng-if="location.found" class="text-center">
+		<div ng-if="location.found">
 
-			<img ng-src="http://openweathermap.org/img/w/{{location.icon}}.png" class="icon" /> 
+			<img ng-src="http://openweathermap.org/img/w/{{location.icon}}.png" /> 
 		
 			<p>You are in</p>
 			
@@ -45,7 +44,7 @@
 			
 			<h3>"{{weather.msg}}"</h3>
 			
-			<h2>Check out these places</h2>
+			<h3>Check out these other places</h3>
 		
 			<p class="place" ng-click="getPosInfo({coords:{longitude:'0.1275',latitude:'51.5072'}})">Abbey Wood, London</p>
 			<p class="place" ng-click="getPosInfo({coords:{longitude:'2.21',latitude:'48.51'}})">Chamarande,Paris</p>
@@ -58,15 +57,15 @@
 			<img src="img/serious_cloud.png">
 		
 			<p>We were unable to identify your location. Please insert your a US zipcode in the input below</p>
-		
+            
+            <div ng-if="invalidZipcode" class="error">You submitted an invalid zipcode. Please try again with a new number (eg. 1005).</div>
+		    
 			<form ng-submit="submitZipcode( location.zipcode )">
 				<input ng-model="location.zipcode" class="input" />
 			</form>
 			
 		</div>
-		
-		<div ng-if="invalidZipcode" class="error">You submitted an invalid zipcode. Please try again with a new number (eg. 1005).</div>
-		
+       
     </div>
 
 </body>
